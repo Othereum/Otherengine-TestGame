@@ -12,7 +12,7 @@
 
 namespace oeng
 {
-	static constexpr std::array kShipPng{"Assets/Ship.png", "Assets/ShipWithThrust.png"};
+	static constexpr std::array kShipPng{"../Assets/Ship.png", "../Assets/ShipWithThrust.png"};
 	
 	ship::ship(CWorld& world)
 		:AActor{world}

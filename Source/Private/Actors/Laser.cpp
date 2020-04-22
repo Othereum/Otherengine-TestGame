@@ -11,7 +11,7 @@ namespace oeng
 		SetLifespan(1);
 
 		auto& sprite = AddComponent<CSpriteComponent>();
-		sprite.SetTexture("Assets/Laser.png");
+		sprite.SetTexture("../Assets/Laser.png");
 
 		auto& col = AddComponent<CCircleComponent>();
 		col.SetRadius(16);

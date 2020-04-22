@@ -10,7 +10,7 @@ namespace oeng
 		:AActor{world}
 	{
 		auto& sprite = AddComponent<CSpriteComponent>();
-		sprite.SetTexture("Assets/Asteroid.png");
+		sprite.SetTexture("../Assets/Asteroid.png");
 
 		auto& movement = AddComponent<CMoveComponent>();
 		movement.SetVelocity(math::RandUnitVec() * 150);
