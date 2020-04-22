@@ -32,7 +32,7 @@ namespace oeng
 				GetTimerManager().SetTimer(2s, [&]()
 				{
 					SetEnabled(true);
-					SetPos(GetEngine().GetScreenSize() / 2);
+					SetPos({});
 					SetRot({});
 				});
 			}
@@ -42,13 +42,13 @@ namespace oeng
 		
 		input.BindAxis("MoveForward", [&](float f)
 		{
-			const auto bShouldMove = !math::IsNearlyZero(f);
-			if (bShouldMove) movement.AddInput(GetForward() * f);
+			const auto should_move = !math::IsNearlyZero(f);
+			if (should_move) movement.AddInput(GetForward() * f);
 
-			if (bShouldMove != bIsMoving_)
+			if (should_move != is_moving_)
 			{
-				sprite.SetTexture(kShipPng[bShouldMove]);
-				bIsMoving_ = bShouldMove;
+				sprite.SetTexture(kShipPng[should_move]);
+				is_moving_ = should_move;
 			}
 		});
 
@@ -60,14 +60,14 @@ namespace oeng
 		input.BindAction("Shoot", true, [this]()
 		{
 			const auto cur = GetWorld().GetTime();
-			if (nextAttack_ <= cur)
+			if (next_attack_ <= cur)
 			{
 				auto& l = GetWorld().SpawnActor<ALaser>();
 				l.SetPos(GetPos());
 				l.SetRot(GetRot());
 
 				using namespace std::chrono_literals;
-				nextAttack_ = cur + 500ms;
+				next_attack_ = cur + 500ms;
 			}
 		});
 	}

@@ -31,11 +31,10 @@ namespace oeng
 		for (auto i = 0; i < 20; ++i)
 		{
 			auto& ast = world.SpawnActor<AAsteroid>();
-			ast.SetPos(math::RandVec({0, 0}, Vec2{1024, 768}));
+			ast.SetPos(math::RandVec(engine.GetScreenSize() / -2.f, engine.GetScreenSize() / 2.f));
 			ast.SetRot(math::RandAng());
 		}
 
-		auto& sh = world.SpawnActor<ship>();
-		sh.SetPos(Vec2{512, 384});
+		world.SpawnActor<ship>();
 	}
 }

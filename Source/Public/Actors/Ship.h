@@ -10,7 +10,7 @@ namespace oeng
 		explicit ship(CWorld& world);
 
 	private:
-		std::chrono::steady_clock::time_point nextAttack_;
-		bool bIsMoving_ = false;
+		std::chrono::steady_clock::time_point next_attack_;
+		bool is_moving_ = false;
 	};
 }
