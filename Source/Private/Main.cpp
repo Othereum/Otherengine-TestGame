@@ -4,12 +4,18 @@
 #include "Engine.h"
 #include "World.h"
 #include "InputSystem.h"
+#include "GameModule.hpp"
 
 #include "Actors/Asteroid.h"
 #include "Actors/Ship.h"
 
 namespace oeng
 {
+	const char* GetGameName() noexcept
+	{
+		return "Test Game";
+	}
+	
 	void LoadGameModule(CEngine& engine)
 	{
 		auto& input = engine.GetInputSystem();
