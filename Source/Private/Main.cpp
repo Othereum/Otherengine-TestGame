@@ -41,6 +41,7 @@ namespace oeng
 			ast.SetRot(math::RandAng());
 		}
 
-		world.SpawnActor<ship>();
+		auto& s = world.SpawnActor<ship>();
+		s.SetRot(-90_deg);
 	}
 }

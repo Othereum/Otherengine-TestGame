@@ -33,7 +33,7 @@ namespace oeng
 				{
 					SetEnabled(true);
 					SetPos({});
-					SetRot({});
+					SetRot(-90_deg);
 				});
 			}
 		});
