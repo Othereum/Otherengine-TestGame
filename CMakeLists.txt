@@ -11,3 +11,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 add_subdirectory("Engine")
 target_link_libraries(${PROJECT_NAME} PRIVATE Otherengine)
+
+install(DIRECTORY "Binaries" DESTINATION ".")
+install(DIRECTORY "Assets" DESTINATION ".")
