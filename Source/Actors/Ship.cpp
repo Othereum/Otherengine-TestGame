@@ -1,7 +1,7 @@
-#include "Actors/Ship.h"
+#include "Ship.h"
 #include <array>
-#include "Actors/Asteroid.h"
-#include "Actors/Laser.h"
+#include "Asteroid.h"
+#include "Laser.h"
 #include "Components/SpriteComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/PawnMoveComponent.h"

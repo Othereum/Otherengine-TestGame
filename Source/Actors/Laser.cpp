@@ -1,5 +1,5 @@
-#include "Actors/Laser.h"
-#include "Actors/Asteroid.h"
+#include "Laser.h"
+#include "Asteroid.h"
 #include "Components/SpriteComponent.h"
 #include "Components/CircleComponent.h"
 

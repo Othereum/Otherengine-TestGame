@@ -2,7 +2,7 @@
 project("TestGame")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Binaries)
 
-file(GLOB_RECURSE SRC_FILES "Source/Private/*.cpp")
+file(GLOB_RECURSE SRC_FILES "Source/*.cpp")
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -10,6 +10,4 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 add_subdirectory("Engine")
-
-target_include_directories(${PROJECT_NAME} PUBLIC "Source/Public")
 target_link_libraries(${PROJECT_NAME} PRIVATE Otherengine)

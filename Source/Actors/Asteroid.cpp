@@ -1,4 +1,4 @@
-#include "Actors/Asteroid.h"
+#include "Asteroid.h"
 #include "Components/MoveComponent.h"
 #include "Components/SpriteComponent.h"
 #include "Components/CircleComponent.h"
