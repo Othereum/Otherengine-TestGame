@@ -20,6 +20,9 @@ namespace oeng
 		auto& sprite = AddComponent<CSpriteComponent>();
 		sprite.SetTexture(kShipPng[0]);
 
+		auto& highlight = AddComponent<CSpriteComponent>(99);
+		highlight.SetTexture("../Assets/ShipHighlight.png");
+
 		auto& movement = AddComponent<CPawnMoveComp>();
 
 		auto& col = AddComponent<CCircleComponent>();
