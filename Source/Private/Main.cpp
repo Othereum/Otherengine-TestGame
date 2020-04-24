@@ -8,6 +8,7 @@
 
 #include "Actors/Asteroid.h"
 #include "Actors/Ship.h"
+#include "Components/SpriteComponent.h"
 
 namespace oeng
 {
@@ -43,5 +44,9 @@ namespace oeng
 
 		auto& s = world.SpawnActor<ship>();
 		s.SetRot(-90_deg);
+
+		auto& bg = world.SpawnActor<AActor>();
+		auto& bg_comp = bg.AddComponent<CSpriteComponent>(10);
+		bg_comp.SetTexture("../Assets/Background.png");
 	}
 }
