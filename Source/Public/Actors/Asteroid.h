@@ -7,5 +7,8 @@ namespace oeng
 	{
 	public:
 		explicit AAsteroid(CWorld& world);
+
+	private:
+		void UpdateActor(float delta_seconds) override;
 	};
 }
