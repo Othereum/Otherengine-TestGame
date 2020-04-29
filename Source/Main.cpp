@@ -37,16 +37,16 @@ namespace oeng
 		auto& world = engine.GetWorld();
 		for (auto i = 0; i < 20; ++i)
 		{
-			auto& ast = world.SpawnActor<AAsteroid>();
-			ast.SetPos(math::RandVec(engine.GetScreenSize() / -2.f, engine.GetScreenSize() / 2.f));
-			ast.SetRot(math::RandAng());
+			auto ast = world.SpawnActor<AAsteroid>().lock();
+			ast->SetPos(math::RandVec(engine.GetScreenSize() / -2.f, engine.GetScreenSize() / 2.f));
+			ast->SetRot(math::RandAng());
 		}
 
-		auto& s = world.SpawnActor<ship>();
-		s.SetRot(-90_deg);
+		auto s = world.SpawnActor<ship>().lock();
+		s->SetRot(-90_deg);
 
-		auto& bg = world.SpawnActor<AActor>();
-		auto& bg_comp = bg.AddComponent<CSpriteComponent>(10);
+		auto bg = world.SpawnActor<AActor>().lock();
+		auto& bg_comp = bg->AddComponent<CSpriteComponent>(10);
 		bg_comp.SetTexture("../Assets/Background.png");
 	}
 }

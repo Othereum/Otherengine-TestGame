@@ -32,7 +32,7 @@ namespace oeng
 			{
 				SetEnabled(false);
 				
-				GetTimerManager().SetTimer(2s, [&]()
+				GetTimerManager().SetTimer(2, [&]()
 				{
 					SetEnabled(true);
 					SetPos({});
@@ -65,9 +65,9 @@ namespace oeng
 			const auto cur = GetWorld().GetTime();
 			if (next_attack_ <= cur)
 			{
-				auto& l = GetWorld().SpawnActor<ALaser>();
-				l.SetPos(GetPos());
-				l.SetRot(GetRot());
+				auto l = GetWorld().SpawnActor<ALaser>().lock();
+				l->SetPos(GetPos());
+				l->SetRot(GetRot());
 
 				using namespace std::chrono_literals;
 				next_attack_ = cur + 500ms;
