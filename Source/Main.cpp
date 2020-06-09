@@ -1,7 +1,7 @@
 #include "Engine.hpp"
 #include "Log.hpp"
 
-#include "Actor.hpp"
+#include "GameFramework/Actor.hpp"
 #include "Components/MeshComponent.hpp"
 
 using namespace oeng;

@@ -8,7 +8,7 @@ add_executable(${PROJECT_NAME} ${SRC_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 20)
 
 add_subdirectory("Engine")
-target_link_libraries(${PROJECT_NAME} PRIVATE Otherengine)
+target_link_libraries(${PROJECT_NAME} PRIVATE Otherengine-Engine)
 
 install(DIRECTORY "Binaries" DESTINATION ".")
 install(DIRECTORY "Assets" DESTINATION ".")
