@@ -1,11 +1,11 @@
 {
 	"version":1,
 	"vertexformat":"PosNormTex",
-	"shader":"../Engine/Shaders/BasicMesh",
+	"shader":"../Engine/Shaders/Phong",
 	"textures":[
 		"../Assets/Plane.png"
 	],
-	"specularPower":100.0,
+	"specular":0.5,
 	"vertices":[
 		[50.000000,50.000000,-0.000000,-0.003922,-0.003922,1.000000,1.000000,1.000000],
 		[50.000000,25.000000,-0.000000,-0.003922,-0.003922,1.000000,1.000000,0.750000],

@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Engine.hpp"
 #include "Log.hpp"
 #include "GameFramework/Actor.hpp"
@@ -28,39 +26,39 @@ public:
 		input.BindAxis("MoveUp", [this](Float f) { MoveUp(f); });
 		input.BindAxis("Turn", [this](Float f) { Turn(f); });
 		input.BindAxis("LookUp", [this](Float f) { LookUp(f); });
-		
-		movement_.SetMaxSpeed(1);
+
+		movement_.SetMaxSpeed(200);
 	}
 
 private:
 	void MoveForward(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			movement_.AddInput(*GetForward() * f);
+			movement_.AddMovInput(*GetForward() * f);
 	}
 
 	void MoveRight(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			movement_.AddInput(*GetRight() * f);
+			movement_.AddMovInput(*GetRight() * f);
 	}
 
 	void MoveUp(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			movement_.AddInput(Vec3::up * f);
+			movement_.AddMovInput(Vec3::up * f);
 	}
 
 	void Turn(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			SetRot(Quat{UVec3::up, 1_deg * f} * GetRot());
+			movement_.AddRotInput({UVec3::up, 1.5_rad * f * GetWorld().GetDeltaSeconds()});
 	}
 
 	void LookUp(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			SetRot(Quat{GetRight(), 0.75_deg * f} * GetRot());
+			movement_.AddRotInput({GetRight(), 1.5_rad * f * GetWorld().GetDeltaSeconds()});
 	}
 
 	MovementComponent& movement_;
@@ -109,18 +107,11 @@ static void LoadGame(Engine& e)
 		{' ', InputType::kKeyboard, 1},
 	});
 	
-	auto& pawn = world.SpawnActor<SimplePawn>();
+	world.SpawnActor<SimplePawn>();
 }
 
 int main()
 {
-	try
-	{
 		Engine engine{"Test Game", &LoadGame};
 		engine.RunLoop();
-	}
-	catch (const std::exception& e)
-	{
-		log::Critical(e.what());
-	}
 }

@@ -1,11 +1,5 @@
 {
-	"version":1,
-	"vertexformat":"PosNormTex",
-	"shader":"../Engine/Shaders/BasicMesh",
-	"textures":[
-		"../Assets/Cube.png"
-	],
-	"specularPower":100.0,
+	"material": "../Assets/Cube.omat",
 	"vertices":[
 		[-0.5,-0.5,-0.5,0,0,-1,0,0],
 		[0.5,-0.5,-0.5,0,0,-1,1,0],

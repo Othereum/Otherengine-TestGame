@@ -1,0 +1,7 @@
+{
+	"shader":"../Engine/Shaders/Phong",
+    "texture":"../Assets/Sphere.png",
+    "uniforms":{
+        "uSpecular":0.15
+    }
+}
