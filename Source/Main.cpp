@@ -29,6 +29,7 @@ public:
 		input.BindAxis("LookUp", [this](Float f) { LookUp(f); });
 
 		movement_.SetMaxSpeed(200);
+		camera_.SetVFov(60_deg);
 	}
 
 private:
@@ -83,7 +84,8 @@ private:
 		const auto rot = 1_rad * time_;
 		SetRot(Quat{UVec3::forward, rot} * init_rot_);
 
-		light_.SetColor(Vec3::one * Abs(Cos(rot/2)));
+		const auto alpha = Abs(Cos(rot/2));
+		light_.SetColor(Vec3::one * (alpha*alpha));
 	}
 
 	DirLightComponent& light_;
