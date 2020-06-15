@@ -1,11 +1,11 @@
 #include "Engine.hpp"
 #include "Log.hpp"
-#include "GameFramework/Actor.hpp"
-#include "Components/CameraComponent.hpp"
+#include "Actors/Actor.hpp"
+#include "Camera/CameraComponent.hpp"
 #include "Components/DirLightComponent.hpp"
 #include "Components/MeshComponent.hpp"
 #include "Components/InputComponent.hpp"
-#include "GameFramework/MovementComponent.hpp"
+#include "Components/MovementComponent.hpp"
 #include "SDL2/SDL_keycode.h"
 
 using namespace oeng;
