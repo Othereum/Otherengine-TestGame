@@ -2,6 +2,7 @@
 #include "Log.hpp"
 #include "GameFramework/Actor.hpp"
 #include "Components/CameraComponent.hpp"
+#include "Components/DirLightComponent.hpp"
 #include "Components/MeshComponent.hpp"
 #include "Components/InputComponent.hpp"
 #include "GameFramework/MovementComponent.hpp"
@@ -65,6 +66,31 @@ private:
 	CameraComponent& camera_;
 };
 
+class RotatingLight : public AActor
+{
+public:
+	explicit RotatingLight(World& world)
+		:AActor{world}, light_{AddComponent<DirLightComponent>()}
+	{
+		SetRootComponent(&light_);
+		light_.Activate();
+	}
+
+private:
+	void OnUpdate(Float delta_seconds) override
+	{
+		time_ += delta_seconds;
+		const auto rot = 1_rad * time_;
+		SetRot(Quat{UVec3::forward, rot} * init_rot_);
+
+		light_.SetColor(Vec3::one * Abs(Cos(rot/2)));
+	}
+
+	DirLightComponent& light_;
+	const Quat init_rot_{UVec3::right, 1_rad};
+	Float time_ = 0;
+};
+
 static void LoadGame(Engine& e)
 {
 	auto& world = e.GetWorld();
@@ -108,10 +134,18 @@ static void LoadGame(Engine& e)
 	});
 	
 	world.SpawnActor<SimplePawn>();
+	world.SpawnActor<RotatingLight>();
 }
 
 int main()
 {
+	try
+	{
 		Engine engine{"Test Game", &LoadGame};
 		engine.RunLoop();
+	}
+	catch (const std::exception& e)
+	{
+		log::Critical(e.what());
+	}
 }
