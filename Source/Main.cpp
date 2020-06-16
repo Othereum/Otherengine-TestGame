@@ -93,6 +93,21 @@ private:
 	Float time_ = 0;
 };
 
+class PlaneActor : public AActor
+{
+public:
+	explicit PlaneActor(World& world)
+		:AActor{world}, mesh_{AddComponent<MeshComponent>()}
+	{
+		SetRootComponent(&mesh_);
+		mesh_.SetRelScale({All{}, 10});
+		mesh_.SetMesh("../Assets/Plane.omesh");
+	}
+
+private:
+	MeshComponent& mesh_;
+};
+
 static void LoadGame(Engine& e)
 {
 	auto& world = e.GetWorld();
@@ -113,6 +128,41 @@ static void LoadGame(Engine& e)
 	sphere.SetRootComponent(&sphere_mesh);
 	sphere.SetTrsf({ {200, -75, 0}, {}, {All{}, 3} });
 
+	constexpr auto start = -1250.0_f;
+	constexpr auto size = 250.0_f;
+	for (auto i = 0; i < 10; i++)
+	{
+		for (auto j = 0; j < 10; j++)
+		{
+			auto& a = world.SpawnActor<PlaneActor>();
+			a.SetPos(Vec3(start + i * size, start + j * size, -100.0_f));
+		}
+	}
+
+	Quat q(UVec3::forward, 90_deg);
+	for (auto i = 0; i < 10; i++)
+	{
+		auto& a = world.SpawnActor<PlaneActor>();
+		a.SetPos(Vec3(start + i * size, start - size, 0.0_f));
+		a.SetRot(q);
+		
+		auto& b = world.SpawnActor<PlaneActor>();
+		b.SetPos(Vec3(start + i * size, -start + size, 0.0_f));
+		b.SetRot(q);
+	}
+
+	q = Quat(UVec3::up, 90_deg) * q;
+	for (auto i = 0; i < 10; i++)
+	{
+		auto& a = world.SpawnActor<PlaneActor>();
+		a.SetPos(Vec3(start - size, start + i * size, 0.0_f));
+		a.SetRot(q);
+
+		auto& b = world.SpawnActor<PlaneActor>();
+		b.SetPos(Vec3(-start + size, start + i * size, 0.0_f));
+		b.SetRot(q);
+	}
+	
 	auto& is = e.GetInputSystem();
 	is.AddAxis("MoveForward", {
 		{'w', InputType::kKeyboard, 1},
