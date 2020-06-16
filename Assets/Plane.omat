@@ -1,0 +1,7 @@
+{
+	"shader":"../Engine/Shaders/Phong",
+	"texture":"../Assets/Plane.png",
+    "uniforms":{
+        "uSpecular":0.5
+    }
+}
