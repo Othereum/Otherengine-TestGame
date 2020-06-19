@@ -2,6 +2,6 @@
 	"shader":"../Engine/Shaders/Phong",
     "texture":"../Assets/Cube.png",
     "uniforms":{
-        "uSpecular":0.15
+        "uSpecular": 0.15
     }
 }

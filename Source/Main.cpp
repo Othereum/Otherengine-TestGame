@@ -1,11 +1,16 @@
 #include "Engine.hpp"
 #include "Log.hpp"
 #include "Actors/Actor.hpp"
+#include "Actors/DirLight.hpp"
+#include "Actors/PointLight.hpp"
+#include "Actors/SkyLight.hpp"
 #include "Camera/CameraComponent.hpp"
 #include "Components/DirLightComponent.hpp"
 #include "Components/MeshComponent.hpp"
 #include "Components/InputComponent.hpp"
 #include "Components/MovementComponent.hpp"
+#include "Components/PointLightComponent.hpp"
+#include "Components/SpotLightComponent.hpp"
 #include "SDL2/SDL_keycode.h"
 
 using namespace oeng;
@@ -20,6 +25,10 @@ public:
 	{
 		SetRootComponent(&camera_);
 		camera_.Activate();
+		camera_.SetNearFar(10, 10000);
+		camera_.SetVFov(60_deg);
+
+		movement_.SetMaxSpeed(300);
 
 		auto& input = AddComponent<InputComponent>();
 		input.BindAxis("MoveForward", [this](Float f) { MoveForward(f); });
@@ -28,15 +37,22 @@ public:
 		input.BindAxis("Turn", [this](Float f) { Turn(f); });
 		input.BindAxis("LookUp", [this](Float f) { LookUp(f); });
 
-		movement_.SetMaxSpeed(200);
-		camera_.SetVFov(60_deg);
+		auto& light = AddComponent<SpotLightComponent>();
+		light.AttachTo(GetRootComponent(), AttachRule::kKeepRelative);
+		light.SetAngle({0_deg, 22.5_deg});
+		light.SetRadius(500);
+		light.SetColor({All{}, 1.5_f});
 	}
 
 private:
 	void MoveForward(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			movement_.AddMovInput(*GetForward() * f);
+		{
+			auto input = *GetForward();
+			input[2] = 0; input.TryNormalize();
+			movement_.AddMovInput(input * f);
+		}
 	}
 
 	void MoveRight(Float f) noexcept
@@ -65,32 +81,6 @@ private:
 
 	MovementComponent& movement_;
 	CameraComponent& camera_;
-};
-
-class RotatingLight : public AActor
-{
-public:
-	explicit RotatingLight(World& world)
-		:AActor{world}, light_{AddComponent<DirLightComponent>()}
-	{
-		SetRootComponent(&light_);
-		light_.Activate();
-	}
-
-private:
-	void OnUpdate(Float delta_seconds) override
-	{
-		time_ += delta_seconds;
-		const auto rot = 1_rad * time_;
-		SetRot(Quat{UVec3::forward, rot} * init_rot_);
-
-		const auto alpha = Abs(Cos(rot/2));
-		light_.SetColor(Vec3::one * (alpha*alpha));
-	}
-
-	DirLightComponent& light_;
-	const Quat init_rot_{UVec3::right, 1_rad};
-	Float time_ = 0;
 };
 
 class PlaneActor : public AActor
@@ -127,7 +117,7 @@ static void LoadGame(Engine& e)
 	sphere_mesh.SetMesh("../Assets/Sphere.omesh");
 	sphere.SetRootComponent(&sphere_mesh);
 	sphere.SetTrsf({ {200, -75, 0}, {}, {All{}, 3} });
-
+	
 	constexpr auto start = -1250.0_f;
 	constexpr auto size = 250.0_f;
 	for (auto i = 0; i < 10; i++)
@@ -186,7 +176,13 @@ static void LoadGame(Engine& e)
 	});
 	
 	world.SpawnActor<SimplePawn>();
-	world.SpawnActor<RotatingLight>();
+	world.SpawnActor<ASkyLight>();
+	
+	// auto& sun = world.SpawnActor<ADirLight>();
+	// sun.SetRot({UVec3::right, 1_rad});
+
+	// auto& light = world.SpawnActor<APointLight>();
+	// light.SetPos({300, 0, 0});
 }
 
 int main()
