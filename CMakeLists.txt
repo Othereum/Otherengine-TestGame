@@ -1,6 +1,6 @@
 ﻿cmake_minimum_required(VERSION 3.16)
 project("TestGame")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Binaries)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_SOURCE_DIR}/Binaries>)
 
 file(GLOB_RECURSE SRC_FILES "Source/*.cpp")
 add_executable(${PROJECT_NAME} ${SRC_FILES})
