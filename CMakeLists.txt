@@ -1,14 +1,15 @@
 ﻿cmake_minimum_required(VERSION 3.16)
 project("TestGame")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_SOURCE_DIR}/Binaries>)
+
+add_subdirectory("Engine")
 
 file(GLOB_RECURSE SRC_FILES "Source/*.cpp")
 add_executable(${PROJECT_NAME} ${SRC_FILES})
-
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 20)
-
-add_subdirectory("Engine")
 target_link_libraries(${PROJECT_NAME} PRIVATE Otherengine-Engine)
+
+# Temporary
+find_package(SDL2 REQUIRED)
+target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS})
 
 install(DIRECTORY "Binaries" DESTINATION ".")
 install(DIRECTORY "Assets" DESTINATION ".")
