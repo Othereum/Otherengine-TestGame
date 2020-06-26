@@ -1,5 +1,4 @@
 #include "Engine.hpp"
-#include "Log.hpp"
 #include "Actors/Actor.hpp"
 #include "Actors/DirLight.hpp"
 #include "Actors/PointLight.hpp"
@@ -9,7 +8,6 @@
 #include "Components/InputComponent.hpp"
 #include "Components/MovementComponent.hpp"
 #include "Components/SpotLightComponent.hpp"
-#include "SDL2/SDL_keycode.h"
 
 using namespace oeng;
 
@@ -72,13 +70,13 @@ private:
 	void Turn(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			movement_.AddRotInput({UVec3::up, 20_deg * f * GetWorld().GetDeltaSeconds()});
+			movement_.AddRotInput({UVec3::up, 30_deg * f * GetWorld().GetDeltaSeconds()});
 	}
 
 	void LookUp(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			movement_.AddRotInput({GetRight(), 20_deg * f * GetWorld().GetDeltaSeconds()});
+			movement_.AddRotInput({GetRight(), 30_deg * f * GetWorld().GetDeltaSeconds()});
 	}
 
 	MovementComponent& movement_;
@@ -201,30 +199,28 @@ static void LoadGame(Engine& e)
 	
 	auto& is = e.GetInputSystem();
 	is.AddAxis("MoveForward", {
-		{'w', InputType::kKeyboard, 1},
-		{'s', InputType::kKeyboard, -1},
+		{Keycode::W, 1},
+		{Keycode::S, -1},
 	});
 	is.AddAxis("MoveRight", {
-		{'a', InputType::kKeyboard, -1},
-		{'d', InputType::kKeyboard, 1},
+		{Keycode::A, -1},
+		{Keycode::D, 1},
 	});
 	is.AddAxis("Turn", {
 		// {SDLK_RIGHT, InputType::kKeyboard, 1},
 		// {SDLK_LEFT, InputType::kKeyboard, -1}
-		{-1, InputType::kMAxisX, 1}
+		{MouseAxis::X, 1}
 	});
 	is.AddAxis("LookUp", {
 		// {SDLK_UP, InputType::kKeyboard, -1},
 		// {SDLK_DOWN, InputType::kKeyboard, 1},
-		{-1, InputType::kMAxisY, 1}
+		{MouseAxis::Y, 1}
 	});
 	is.AddAxis("MoveUp", {
-		{SDLK_LSHIFT, InputType::kKeyboard, -1},
-		{' ', InputType::kKeyboard, 1},
+		{Keycode::L_SHIFT, -1},
+		{Keycode::SPACE, 1},
 	});
-	is.AddAction("Flash", {
-		{'f', InputType::kKeyboard},
-	});
+	is.AddAction("Flash", {Keycode::F});
 	
 	world.SpawnActor<SimplePawn>();
 	world.SpawnActor<ASkyLight>();
@@ -236,13 +232,5 @@ static void LoadGame(Engine& e)
 
 int main()
 {
-	try
-	{
-		Engine engine{"Test Game", &LoadGame};
-		engine.RunLoop();
-	}
-	catch (const std::exception& e)
-	{
-		log::Critical(e.what());
-	}
+	Main("Test Game", &LoadGame);
 }
