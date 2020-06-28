@@ -135,7 +135,7 @@ private:
 	void OnUpdate(Float delta_seconds) override
 	{
 		time_ += delta_seconds;
-		SetPos(init_pos_ + Vec3{150 * sin(time_ * 2), 0, 0});
+		SetPos(init_pos_ + Vec3{150 * std::sin(time_ * 2), 0, 0});
 	}
 
 	const Vec3 init_pos_{200, -20, 0};
