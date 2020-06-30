@@ -11,6 +11,8 @@
 
 using namespace oeng;
 
+OE_DEFINE_GAME_MODULE(TestGame);
+
 class SimplePawn : public AActor
 {
 public:
@@ -142,7 +144,7 @@ private:
 	Float time_ = 0;
 };
 
-static void LoadGame(Engine& e)
+OE_GAME_API void LoadGame(Engine& e)
 {
 	auto& world = e.GetWorld();
 	
@@ -207,13 +209,9 @@ static void LoadGame(Engine& e)
 		{Keycode::D, 1},
 	});
 	is.AddAxis("Turn", {
-		// {SDLK_RIGHT, InputType::kKeyboard, 1},
-		// {SDLK_LEFT, InputType::kKeyboard, -1}
 		{MouseAxis::X, 1}
 	});
 	is.AddAxis("LookUp", {
-		// {SDLK_UP, InputType::kKeyboard, -1},
-		// {SDLK_DOWN, InputType::kKeyboard, 1},
 		{MouseAxis::Y, 1}
 	});
 	is.AddAxis("MoveUp", {
@@ -230,7 +228,3 @@ static void LoadGame(Engine& e)
 	sun.SetRot({UVec3::right, 1_rad});
 }
 
-int main()
-{
-	Main("Test Game", &LoadGame);
-}
