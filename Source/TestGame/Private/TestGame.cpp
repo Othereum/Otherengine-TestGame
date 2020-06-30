@@ -32,7 +32,7 @@ public:
 		auto& input = AddComponent<InputComponent>();
 		input.BindAxis("MoveForward", [this](Float f) { MoveForward(f); });
 		input.BindAxis("MoveRight", [this](Float f) { MoveRight(f); });
-		//input.BindAxis("MoveUp", [this](Float f) { MoveUp(f); });
+		input.BindAxis("MoveUp", [this](Float f) { MoveUp(f); });
 		input.BindAxis("Turn", [this](Float f) { Turn(f); });
 		input.BindAxis("LookUp", [this](Float f) { LookUp(f); });
 		input.BindAction("Flash", true, [this]()
@@ -227,4 +227,3 @@ OE_GAME_API void LoadGame(Engine& e)
 	auto& sun = world.SpawnActor<RotatingLight>();
 	sun.SetRot({UVec3::right, 1_rad});
 }
-
