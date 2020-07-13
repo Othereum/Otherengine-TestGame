@@ -1,17 +1,18 @@
+﻿#include "Debug.hpp"
 #include "Engine.hpp"
-#include "Actors/Actor.hpp"
 #include "Actors/DirLight.hpp"
+#include "Actors/MeshActor.hpp"
 #include "Actors/PointLight.hpp"
 #include "Actors/SkyLight.hpp"
 #include "Camera/CameraComponent.hpp"
-#include "Components/MeshComponent.hpp"
 #include "Components/InputComponent.hpp"
+#include "Components/MeshComponent.hpp"
 #include "Components/MovementComponent.hpp"
 #include "Components/SpotLightComponent.hpp"
 
 using namespace oeng;
 
-OE_DEFINE_GAME_MODULE(TestGame);
+OE_DEFINE_GAME_MODULE(u8"테스트 게임");
 
 class SimplePawn : public AActor
 {
@@ -30,12 +31,12 @@ public:
 		movement_.SetMaxSpeed(300);
 
 		auto& input = AddComponent<InputComponent>();
-		input.BindAxis("MoveForward", [this](Float f) { MoveForward(f); });
-		input.BindAxis("MoveRight", [this](Float f) { MoveRight(f); });
-		input.BindAxis("MoveUp", [this](Float f) { MoveUp(f); });
-		input.BindAxis("Turn", [this](Float f) { Turn(f); });
-		input.BindAxis("LookUp", [this](Float f) { LookUp(f); });
-		input.BindAction("Flash", true, [this]()
+		input.BindAxis(u8"MoveForward", [this](Float f) { MoveForward(f); });
+		input.BindAxis(u8"MoveRight", [this](Float f) { MoveRight(f); });
+		input.BindAxis(u8"MoveUp", [this](Float f) { MoveUp(f); });
+		input.BindAxis(u8"Turn", [this](Float f) { Turn(f); });
+		input.BindAxis(u8"LookUp", [this](Float f) { LookUp(f); });
+		input.BindAction(u8"Flash", true, [this]()
 		{
 			light_.IsActive() ? light_.Deactivate() : light_.Activate();
 		});
@@ -72,13 +73,13 @@ private:
 	void Turn(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			movement_.AddRotInput({UVec3::up, 30_deg * f * GetWorld().GetDeltaSeconds()});
+			movement_.AddRotInput({UVec3::up, 25_deg * f * GetWorld().GetDeltaSeconds()});
 	}
 
 	void LookUp(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			movement_.AddRotInput({GetRight(), 30_deg * f * GetWorld().GetDeltaSeconds()});
+			movement_.AddRotInput({GetRight(), 25_deg * f * GetWorld().GetDeltaSeconds()});
 	}
 
 	MovementComponent& movement_;
@@ -94,7 +95,7 @@ public:
 	{
 		SetRootComponent(&mesh_);
 		mesh_.SetRelScale({All{}, 10});
-		mesh_.SetMesh("../Assets/Plane.omesh");
+		mesh_.SetMesh(u8"../Assets/Plane.omesh");
 	}
 
 private:
@@ -144,13 +145,40 @@ private:
 	Float time_ = 0;
 };
 
-OE_GAME_API void LoadGame(Engine& e)
+static void CreateFloor(World& world, const int size)
+{
+	const Path mesh = u8"../Assets/Plane.omesh";
+
+	constexpr auto plane = 100_f;
+	constexpr auto scale = 10_f;
+	constexpr auto real = plane * scale;
+	
+	const auto base = -real/2 * ToFloat(size-1);
+	
+	for (auto i=0; i<size; ++i)
+	{
+		for (auto j=0; j<size; ++j)
+		{
+			auto& floor = world.SpawnActor<AMeshActor>();
+			floor.SetMesh(mesh);
+			floor.SetTrsf({
+				{base+i*real, base+j*real, -100},
+				{},
+				{scale, scale, 1}
+			});
+		}
+	}
+}
+
+OE_GAME_API void GameMain(Engine& e)
 {
 	auto& world = e.GetWorld();
+
+	CreateFloor(world, 3);
 	
 	auto& cube = world.SpawnActor<AActor>();
 	auto& cube_mesh = cube.AddComponent<MeshComponent>();
-	cube_mesh.SetMesh("../Assets/Cube.omesh");
+	cube_mesh.SetMesh(u8"../Assets/Cube.omesh");
 	cube.SetRootComponent(&cube_mesh);
 	cube.SetTrsf({
 		{200, 75, 0},
@@ -160,65 +188,9 @@ OE_GAME_API void LoadGame(Engine& e)
 
 	auto& sphere = world.SpawnActor<AActor>();
 	auto& sphere_mesh = sphere.AddComponent<MeshComponent>();
-	sphere_mesh.SetMesh("../Assets/Sphere.omesh");
+	sphere_mesh.SetMesh(u8"../Assets/Sphere.omesh");
 	sphere.SetRootComponent(&sphere_mesh);
 	sphere.SetTrsf({ {200, -75, 0}, {}, {All{}, 3} });
-	
-	constexpr auto start = -1250.0_f;
-	constexpr auto size = 250.0_f;
-	for (auto i = 0; i < 10; i++)
-	{
-		for (auto j = 0; j < 10; j++)
-		{
-			auto& a = world.SpawnActor<PlaneActor>();
-			a.SetPos(Vec3(start + i * size, start + j * size, -100.0_f));
-		}
-	}
-
-	Quat q(UVec3::forward, 90_deg);
-	for (auto i = 0; i < 10; i++)
-	{
-		auto& a = world.SpawnActor<PlaneActor>();
-		a.SetPos(Vec3(start + i * size, start - size, 0.0_f));
-		a.SetRot(q);
-		
-		auto& b = world.SpawnActor<PlaneActor>();
-		b.SetPos(Vec3(start + i * size, -start + size, 0.0_f));
-		b.SetRot(q);
-	}
-
-	q = Quat(UVec3::up, 90_deg) * q;
-	for (auto i = 0; i < 10; i++)
-	{
-		auto& a = world.SpawnActor<PlaneActor>();
-		a.SetPos(Vec3(start - size, start + i * size, 0.0_f));
-		a.SetRot(q);
-
-		auto& b = world.SpawnActor<PlaneActor>();
-		b.SetPos(Vec3(-start + size, start + i * size, 0.0_f));
-		b.SetRot(q);
-	}
-	
-	auto& is = e.GetInputSystem();
-	is.AddAxis("MoveForward", {
-		{Keycode::W, 1},
-		{Keycode::S, -1},
-	});
-	is.AddAxis("MoveRight", {
-		{Keycode::A, -1},
-		{Keycode::D, 1},
-	});
-	is.AddAxis("Turn", {
-		{MouseAxis::X, 1}
-	});
-	is.AddAxis("LookUp", {
-		{MouseAxis::Y, 1}
-	});
-	is.AddAxis("MoveUp", {
-		{Keycode::L_SHIFT, -1},
-		{Keycode::SPACE, 1},
-	});
-	is.AddAction("Flash", {Keycode::F});
 	
 	world.SpawnActor<SimplePawn>();
 	world.SpawnActor<ASkyLight>();
