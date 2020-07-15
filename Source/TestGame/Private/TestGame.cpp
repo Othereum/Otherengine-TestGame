@@ -12,7 +12,7 @@
 
 using namespace oeng;
 
-OE_DEFINE_GAME_MODULE(u8"테스트 게임");
+DEFINE_GAME_MODULE(u8"테스트 게임");
 
 class SimplePawn : public AActor
 {
@@ -73,13 +73,19 @@ private:
 	void Turn(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			movement_.AddRotInput({UVec3::up, 25_deg * f * GetWorld().GetDeltaSeconds()});
+		{
+			const auto delta = GetWorld().GetDeltaSeconds();
+			movement_.AddRotInput({UVec3::up, 360_deg * f * delta});
+		}
 	}
 
 	void LookUp(Float f) noexcept
 	{
 		if (!IsNearlyZero(f))
-			movement_.AddRotInput({GetRight(), 25_deg * f * GetWorld().GetDeltaSeconds()});
+		{
+			const auto delta = GetWorld().GetDeltaSeconds();
+			movement_.AddRotInput({GetRight(), 360_deg * f * delta});
+		}
 	}
 
 	MovementComponent& movement_;
@@ -170,7 +176,7 @@ static void CreateFloor(World& world, const int size)
 	}
 }
 
-OE_GAME_API void GameMain(Engine& e)
+GAME_API void GameMain(Engine& e)
 {
 	auto& world = e.GetWorld();
 
