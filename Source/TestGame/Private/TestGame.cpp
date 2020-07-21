@@ -1,4 +1,3 @@
-﻿#include "Debug.hpp"
 #include "Engine.hpp"
 #include "Actors/DirLight.hpp"
 #include "Actors/MeshActor.hpp"
@@ -12,7 +11,7 @@
 
 using namespace oeng;
 
-DEFINE_GAME_MODULE(u8"테스트 게임");
+DEFINE_GAME_MODULE(Test Game);
 
 class SimplePawn : public AActor
 {
@@ -31,12 +30,12 @@ public:
 		movement_.SetMaxSpeed(300);
 
 		auto& input = AddComponent<InputComponent>();
-		input.BindAxis(u8"MoveForward", [this](Float f) { MoveForward(f); });
-		input.BindAxis(u8"MoveRight", [this](Float f) { MoveRight(f); });
-		input.BindAxis(u8"MoveUp", [this](Float f) { MoveUp(f); });
-		input.BindAxis(u8"Turn", [this](Float f) { Turn(f); });
-		input.BindAxis(u8"LookUp", [this](Float f) { LookUp(f); });
-		input.BindAction(u8"Flash", true, [this]()
+		input.BindAxis(u8"MoveForward"sv, [this](Float f) { MoveForward(f); });
+		input.BindAxis(u8"MoveRight"sv, [this](Float f) { MoveRight(f); });
+		input.BindAxis(u8"MoveUp"sv, [this](Float f) { MoveUp(f); });
+		input.BindAxis(u8"Turn"sv, [this](Float f) { Turn(f); });
+		input.BindAxis(u8"LookUp"sv, [this](Float f) { LookUp(f); });
+		input.BindAction(u8"Flash"sv, true, [this]()
 		{
 			light_.IsActive() ? light_.Deactivate() : light_.Activate();
 		});
@@ -101,7 +100,7 @@ public:
 	{
 		SetRootComponent(&mesh_);
 		mesh_.SetRelScale({All{}, 10});
-		mesh_.SetMesh(u8"../Assets/Plane.omesh");
+		mesh_.SetMesh(u8"../Assets/Plane.omesh"sv);
 	}
 
 private:
@@ -153,7 +152,7 @@ private:
 
 static void CreateFloor(World& world, const int size)
 {
-	const Path mesh = u8"../Assets/Plane.omesh";
+	const Path mesh = u8"../Assets/Plane.omesh"sv;
 
 	constexpr auto plane = 100_f;
 	constexpr auto scale = 10_f;
@@ -184,7 +183,7 @@ GAME_API void GameMain(Engine& e)
 	
 	auto& cube = world.SpawnActor<AActor>();
 	auto& cube_mesh = cube.AddComponent<MeshComponent>();
-	cube_mesh.SetMesh(u8"../Assets/Cube.omesh");
+	cube_mesh.SetMesh(u8"../Assets/Cube.omesh"sv);
 	cube.SetRootComponent(&cube_mesh);
 	cube.SetTrsf({
 		{200, 75, 0},
@@ -194,7 +193,7 @@ GAME_API void GameMain(Engine& e)
 
 	auto& sphere = world.SpawnActor<AActor>();
 	auto& sphere_mesh = sphere.AddComponent<MeshComponent>();
-	sphere_mesh.SetMesh(u8"../Assets/Sphere.omesh");
+	sphere_mesh.SetMesh(u8"../Assets/Sphere.omesh"sv);
 	sphere.SetRootComponent(&sphere_mesh);
 	sphere.SetTrsf({ {200, -75, 0}, {}, {All{}, 3} });
 	
