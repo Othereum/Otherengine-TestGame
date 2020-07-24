@@ -1,0 +1,76 @@
+{
+    "ActionMap": {
+        "Flash": [
+            { "Code": "Keycode.F" },
+            { "Code": "CtrlBtn.dpdown" }
+        ]
+    },
+    "AxisMap": {
+        "Turn": [
+            {
+                "Code": "MouseAxis.X",
+                "Scale": 1.0
+            },
+            {
+                "Code": "CtrlAxis.rightx",
+                "Scale": 1.0
+            }
+        ],
+        "LookUp": [
+            {
+                "Code": "MouseAxis.Y",
+                "Scale": 1.0
+            },
+            {
+                "Code": "CtrlAxis.righty",
+                "Scale": 1.0
+            }
+        ],
+        "MoveForward": [
+            {
+                "Code": "Keycode.W",
+                "Scale": 1.0
+            },
+            {
+                "Code": "Keycode.S",
+                "Scale": -1.0
+            },
+            {
+                "Code": "CtrlAxis.lefty",
+                "Scale": -1.0
+            }
+        ],
+        "MoveRight": [
+            {
+                "Code": "Keycode.A",
+                "Scale": -1.0
+            },
+            {
+                "Code": "Keycode.D",
+                "Scale": 1.0
+            },
+            {
+                "Code": "CtrlAxis.leftx",
+                "Scale": 1.0
+            }
+        ],
+        "MoveUp": [
+            {
+                "Code": "Keycode.Left Shift",
+                "Scale": -1.0
+            },
+            {
+                "Code": "Keycode.Space",
+                "Scale": 1.0
+            },
+            {
+                "Code": "CtrlAxis.righttrigger",
+                "Scale": 1.0
+            },
+            {
+                "Code": "CtrlAxis.lefttrigger",
+                "Scale": -1.0
+            }
+        ]
+    }
+}

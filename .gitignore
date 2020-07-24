@@ -1,7 +1,5 @@
 .vs
 out
 Binaries
-CMakeSettings.json
-Logs
-Config
+Saved
 *.user
