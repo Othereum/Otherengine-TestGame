@@ -9,14 +9,7 @@
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "/p:VcpkgEnabled=true",
-      "ctestCommandArgs": "",
-      "variables": [
-        {
-          "name": "OE_BUILD_DOCS",
-          "value": "True",
-          "type": "BOOL"
-        }
-      ]
+      "ctestCommandArgs": ""
     },
     {
       "name": "x64-Development",
@@ -27,14 +20,7 @@
       "cmakeCommandArgs": "",
       "buildCommandArgs": "/p:VcpkgEnabled=true",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": [
-        {
-          "name": "OE_BUILD_DOCS",
-          "value": "True",
-          "type": "BOOL"
-        }
-      ]
+      "inheritEnvironments": [ "msvc_x64_x64" ]
     },
     {
       "name": "x64-Shipping",
@@ -45,14 +31,7 @@
       "cmakeCommandArgs": "",
       "buildCommandArgs": "/p:VcpkgEnabled=true",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": [
-        {
-          "name": "OE_BUILD_DOCS",
-          "value": "True",
-          "type": "BOOL"
-        }
-      ]
+      "inheritEnvironments": [ "msvc_x64_x64" ]
     },
     {
       "name": "WSL-Clang-Debug",
@@ -66,14 +45,7 @@
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "linux_clang_x64" ],
       "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=0",
-      "variables": [
-        {
-          "name": "OE_BUILD_DOCS",
-          "value": "True",
-          "type": "BOOL"
-        }
-      ]
+      "addressSanitizerRuntimeFlags": "detect_leaks=1"
     },
     {
       "name": "WSL-Clang-Development",
@@ -87,14 +59,7 @@
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "linux_clang_x64" ],
       "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=0",
-      "variables": [
-        {
-          "name": "OE_BUILD_DOCS",
-          "value": "True",
-          "type": "BOOL"
-        }
-      ]
+      "addressSanitizerRuntimeFlags": "detect_leaks=1"
     },
     {
       "name": "WSL-Clang-Shipping",
@@ -108,14 +73,7 @@
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "linux_clang_x64" ],
       "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=0",
-      "variables": [
-        {
-          "name": "OE_BUILD_DOCS",
-          "value": "True",
-          "type": "BOOL"
-        }
-      ]
+      "addressSanitizerRuntimeFlags": "detect_leaks=1"
     },
     {
       "name": "WSL-GCC-Debug",
@@ -130,33 +88,13 @@
       "inheritEnvironments": [ "linux_x64" ],
       "variables": [
         {
-          "name": "CMAKE_C_COMPILER_AR",
-          "value": "/usr/bin/gcc-ar-10",
-          "type": "FILEPATH"
-        },
-        {
-          "name": "CMAKE_C_COMPILER_RANLIB",
-          "value": "/usr/bin/gcc-ranlib-10",
-          "type": "FILEPATH"
-        },
-        {
-          "name": "CMAKE_C_COMPILER",
-          "value": "/usr/bin/gcc-10",
-          "type": "FILEPATH"
-        },
-        {
           "name": "CMAKE_CXX_COMPILER",
           "value": "/usr/bin/g++-10",
           "type": "FILEPATH"
-        },
-        {
-          "name": "OE_BUILD_DOCS",
-          "value": "True",
-          "type": "BOOL"
         }
       ],
       "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=0"
+      "addressSanitizerRuntimeFlags": "detect_leaks=1"
     },
     {
       "name": "WSL-GCC-Development",
@@ -171,33 +109,13 @@
       "inheritEnvironments": [ "linux_x64" ],
       "variables": [
         {
-          "name": "CMAKE_C_COMPILER_AR",
-          "value": "/usr/bin/gcc-ar-10",
-          "type": "FILEPATH"
-        },
-        {
-          "name": "CMAKE_C_COMPILER_RANLIB",
-          "value": "/usr/bin/gcc-ranlib-10",
-          "type": "FILEPATH"
-        },
-        {
-          "name": "CMAKE_C_COMPILER",
-          "value": "/usr/bin/gcc-10",
-          "type": "FILEPATH"
-        },
-        {
           "name": "CMAKE_CXX_COMPILER",
           "value": "/usr/bin/g++-10",
           "type": "FILEPATH"
-        },
-        {
-          "name": "OE_BUILD_DOCS",
-          "value": "True",
-          "type": "BOOL"
         }
       ],
       "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=0"
+      "addressSanitizerRuntimeFlags": "detect_leaks=1"
     },
     {
       "name": "WSL-GCC-Shipping",
@@ -212,33 +130,13 @@
       "inheritEnvironments": [ "linux_x64" ],
       "variables": [
         {
-          "name": "CMAKE_C_COMPILER_AR",
-          "value": "/usr/bin/gcc-ar-10",
-          "type": "FILEPATH"
-        },
-        {
-          "name": "CMAKE_C_COMPILER_RANLIB",
-          "value": "/usr/bin/gcc-ranlib-10",
-          "type": "FILEPATH"
-        },
-        {
-          "name": "CMAKE_C_COMPILER",
-          "value": "/usr/bin/gcc-10",
-          "type": "FILEPATH"
-        },
-        {
           "name": "CMAKE_CXX_COMPILER",
           "value": "/usr/bin/g++-10",
           "type": "FILEPATH"
-        },
-        {
-          "name": "OE_BUILD_DOCS",
-          "value": "True",
-          "type": "BOOL"
         }
       ],
       "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=0"
+      "addressSanitizerRuntimeFlags": "detect_leaks=1"
     }
   ]
 }
