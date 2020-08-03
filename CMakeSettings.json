@@ -9,7 +9,8 @@
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "/p:VcpkgEnabled=true",
-      "ctestCommandArgs": ""
+      "ctestCommandArgs": "",
+      "variables": []
     },
     {
       "name": "x64-Development",
@@ -20,7 +21,8 @@
       "cmakeCommandArgs": "",
       "buildCommandArgs": "/p:VcpkgEnabled=true",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ]
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": []
     },
     {
       "name": "x64-Shipping",
@@ -31,7 +33,8 @@
       "cmakeCommandArgs": "",
       "buildCommandArgs": "/p:VcpkgEnabled=true",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ]
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": []
     },
     {
       "name": "WSL-Clang-Debug",
@@ -45,7 +48,8 @@
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "linux_clang_x64" ],
       "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=1"
+      "addressSanitizerRuntimeFlags": "detect_leaks=1",
+      "variables": []
     },
     {
       "name": "WSL-Clang-Development",
@@ -59,7 +63,8 @@
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "linux_clang_x64" ],
       "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=1"
+      "addressSanitizerRuntimeFlags": "detect_leaks=0",
+      "variables": []
     },
     {
       "name": "WSL-Clang-Shipping",
@@ -73,70 +78,8 @@
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "linux_clang_x64" ],
       "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=1"
-    },
-    {
-      "name": "WSL-GCC-Debug",
-      "generator": "Unix Makefiles",
-      "configurationType": "Debug",
-      "buildRoot": "${projectDir}\\out\\build\\${name}",
-      "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeExecutable": "/usr/bin/cmake",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "-j",
-      "ctestCommandArgs": "",
-      "inheritEnvironments": [ "linux_x64" ],
-      "variables": [
-        {
-          "name": "CMAKE_CXX_COMPILER",
-          "value": "/usr/bin/g++-10",
-          "type": "FILEPATH"
-        }
-      ],
-      "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=1"
-    },
-    {
-      "name": "WSL-GCC-Development",
-      "generator": "Unix Makefiles",
-      "configurationType": "RelWithDebInfo",
-      "buildRoot": "${projectDir}\\out\\build\\${name}",
-      "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeExecutable": "/usr/bin/cmake",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "-j",
-      "ctestCommandArgs": "",
-      "inheritEnvironments": [ "linux_x64" ],
-      "variables": [
-        {
-          "name": "CMAKE_CXX_COMPILER",
-          "value": "/usr/bin/g++-10",
-          "type": "FILEPATH"
-        }
-      ],
-      "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=1"
-    },
-    {
-      "name": "WSL-GCC-Shipping",
-      "generator": "Unix Makefiles",
-      "configurationType": "Release",
-      "buildRoot": "${projectDir}\\out\\build\\${name}",
-      "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeExecutable": "/usr/bin/cmake",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "-j",
-      "ctestCommandArgs": "",
-      "inheritEnvironments": [ "linux_x64" ],
-      "variables": [
-        {
-          "name": "CMAKE_CXX_COMPILER",
-          "value": "/usr/bin/g++-10",
-          "type": "FILEPATH"
-        }
-      ],
-      "wslPath": "${defaultWSLPath}",
-      "addressSanitizerRuntimeFlags": "detect_leaks=1"
+      "addressSanitizerRuntimeFlags": "detect_leaks=0",
+      "variables": []
     }
   ]
 }
