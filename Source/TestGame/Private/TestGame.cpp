@@ -18,9 +18,9 @@ class SimplePawn : public AActor
 public:
 	explicit SimplePawn(World& world)
 		:AActor{world},
-		movement_{AddComponent<MovementComponent>()},
-		camera_{AddComponent<CameraComponent>()},
-		light_{AddComponent<SpotLightComponent>()}
+		movement_{*AddComponent<MovementComponent>()},
+		camera_{*AddComponent<CameraComponent>()},
+		light_{*AddComponent<SpotLightComponent>()}
 	{
 		SetRootComponent(&camera_);
 		camera_.Activate();
@@ -29,13 +29,13 @@ public:
 
 		movement_.SetMaxSpeed(300);
 
-		auto& input = AddComponent<InputComponent>();
-		input.BindAxis(u8"MoveForward"sv, [this](Float f) { MoveForward(f); });
-		input.BindAxis(u8"MoveRight"sv, [this](Float f) { MoveRight(f); });
-		input.BindAxis(u8"MoveUp"sv, [this](Float f) { MoveUp(f); });
-		input.BindAxis(u8"Turn"sv, [this](Float f) { Turn(f); });
-		input.BindAxis(u8"LookUp"sv, [this](Float f) { LookUp(f); });
-		input.BindAction(u8"Flash"sv, true, [this]()
+		const auto input = AddComponent<InputComponent>();
+		input->BindAxis(u8"MoveForward"sv, [this](Float f) { MoveForward(f); });
+		input->BindAxis(u8"MoveRight"sv, [this](Float f) { MoveRight(f); });
+		input->BindAxis(u8"MoveUp"sv, [this](Float f) { MoveUp(f); });
+		input->BindAxis(u8"Turn"sv, [this](Float f) { Turn(f); });
+		input->BindAxis(u8"LookUp"sv, [this](Float f) { LookUp(f); });
+		input->BindAction(u8"Flash"sv, true, [this]()
 		{
 			light_.IsActive() ? light_.Deactivate() : light_.Activate();
 		});
@@ -96,7 +96,7 @@ class PlaneActor : public AActor
 {
 public:
 	explicit PlaneActor(World& world)
-		:AActor{world}, mesh_{AddComponent<MeshComponent>()}
+		:AActor{world}, mesh_{*AddComponent<MeshComponent>()}
 	{
 		SetRootComponent(&mesh_);
 		mesh_.SetRelScale({All{}, 10});
@@ -164,9 +164,9 @@ static void CreateFloor(World& world, const int size)
 	{
 		for (auto j=0; j<size; ++j)
 		{
-			auto& floor = world.SpawnActor<AMeshActor>();
-			floor.SetMesh(mesh);
-			floor.SetTrsf({
+			const auto floor = world.SpawnActor<AMeshActor>();
+			floor->SetMesh(mesh);
+			floor->SetTrsf({
 				{base+i*real, base+j*real, -100},
 				{},
 				{scale, scale, 1}
@@ -181,26 +181,26 @@ GAME_API void GameMain(Engine& e)
 
 	CreateFloor(world, 3);
 	
-	auto& cube = world.SpawnActor<AActor>();
-	auto& cube_mesh = cube.AddComponent<MeshComponent>();
-	cube_mesh.SetMesh(u8"../Assets/Cube.omesh"sv);
-	cube.SetRootComponent(&cube_mesh);
-	cube.SetTrsf({
+	const auto cube = world.SpawnActor<AActor>();
+	const auto cube_mesh = cube->AddComponent<MeshComponent>();
+	cube_mesh->SetMesh(u8"../Assets/Cube.omesh"sv);
+	cube->SetRootComponent(cube_mesh.get());
+	cube->SetTrsf({
 		{200, 75, 0},
 		Quat{UVec3::up, 225_deg} * Quat{UVec3::right, -90_deg},
 		{All{}, 100}
 	});
 
-	auto& sphere = world.SpawnActor<AActor>();
-	auto& sphere_mesh = sphere.AddComponent<MeshComponent>();
-	sphere_mesh.SetMesh(u8"../Assets/Sphere.omesh"sv);
-	sphere.SetRootComponent(&sphere_mesh);
-	sphere.SetTrsf({ {200, -75, 0}, {}, {All{}, 3} });
+	const auto sphere = world.SpawnActor<AActor>();
+	const auto sphere_mesh = sphere->AddComponent<MeshComponent>();
+	sphere_mesh->SetMesh(u8"../Assets/Sphere.omesh"sv);
+	sphere->SetRootComponent(sphere_mesh.get());
+	sphere->SetTrsf({ {200, -75, 0}, {}, {All{}, 3} });
 	
 	world.SpawnActor<SimplePawn>();
 	world.SpawnActor<ASkyLight>();
 	world.SpawnActor<BouncingLight>();
 	
-	auto& sun = world.SpawnActor<RotatingLight>();
-	sun.SetRot({UVec3::right, 1_rad});
+	const auto sun = world.SpawnActor<RotatingLight>();
+	sun->SetRot({UVec3::right, 1_rad});
 }
